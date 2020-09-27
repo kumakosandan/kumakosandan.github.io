@@ -1,0 +1,233 @@
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Kalkulator Bea Masuk</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+
+    <!-- main css -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+	<script>
+		function CekPerhitungan(form) {
+			//ambil dari HTML
+			var Harga_Barang = Number(form.HargaBarang.value);
+			var Biaya_Ongkir = Number(form.ongkir.value);
+			var Nominal_Rate = Number(form.rate.value);
+			var Jenis_Barang = form.JenisBarang.value;
+		
+			//variabel perhitungan
+			var Total_IDR;
+			var Persentase_BM;
+			var Tarif_BM;
+			var Dasar_Pajak;
+			var Per_PPN;
+			var Per_PPH;
+			var Total_Pajak;
+			var Total_Keseluruhan;
+		
+			//Persentase_BM General 7.5%, Tas 20%, Sepatu 30%, Tesktil 20%, Buku 0% ambil dari HTML
+			if (Jenis_Barang == "General"){
+				Persentase_BM = 0.075; Per_PPH = 0; } 
+			else if (Jenis_Barang == "Buku"){
+			Persentase_BM = 0; Per_PPH = 0;}
+			else if (Jenis_Barang == "Tas"){
+			Persentase_BM = 0.2; Per_PPH = 0.075;}
+			else if (Jenis_Barang == "Sepatu"){
+			Persentase_BM = 0.3; Per_PPH = 0.075}
+			else {
+			Persentase_BM = 0.2; Per_PPH = 0.075;}
+		
+			//perhitungan otomatis
+			Total_IDR = (Harga_Barang + Biaya_Ongkir) * Nominal_Rate;
+			Tarif_BM = Math.round(Total_IDR * Persentase_BM);
+			Dasar_Pajak = Math.round(Total_IDR + Tarif_BM);
+			if(Tarif_BM > 0) {
+				Per_PPN = Math.round(Dasar_Pajak * 0.1);}
+			else {
+				Per_PPN = 0;}
+			Per_PPH = Math.round(Dasar_Pajak * Per_PPH);
+			Total_Pajak = Tarif_BM + Per_PPN + Per_PPH;
+			Total_Keseluruhan = Total_IDR + Total_Pajak;
+			
+			function numberWithCommas(x) {
+				return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			}
+		
+			//pass data ke HTML
+			document.getElementById("TotalBarangIDR").value = numberWithCommas(Total_IDR);
+			document.getElementById("TarifBeaMasuk").value = numberWithCommas(Tarif_BM);
+			document.getElementById("DasarPengenaanPajak").value = numberWithCommas(Dasar_Pajak);
+			document.getElementById("JumlahPPN").value = numberWithCommas(Per_PPN);
+			document.getElementById("JumlahPPH").value = numberWithCommas(Per_PPH);
+			document.getElementById("NominalTotalPajak").value = numberWithCommas(Total_Pajak);
+			document.getElementById("NominalTotalKeseluruhan").value = numberWithCommas(Total_Keseluruhan);
+		}
+	</script> 
+
+<!--================Header Menu Area =================-->
+    <header class="header_area">
+        <div class="main_menu" style="background-color:#E9A9E8">
+			<nav class="navbar navbar-expand-lg navbar-light" style="background-color:#E9A9E8;">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <a class="navbar-brand logo_h text-white font-weight-bold" href="index.html"><img src="css/rikochan2.png" class="img-fluid" style="width:120px;height:70px" alt="">KALKULATOR BEA MASUK</a>
+                  
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+					
+					<!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse offset" id="navbarSupportedContent" style="background-color:#E9A9E8">
+                        <ul class="nav navbar-nav menu_nav ml-auto text-white">
+                            <li class="nav-item"><a class="nav-link text-white font-weight-bold" href="#"></a></li> 
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+<!--================Header Menu Area =================-->
+	
+<!--================Home Banner Area =================-->	
+    <section class="home_banner_area">
+        <div class="banner_inner d-flex align-items-start">
+            <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background="">
+            
+            </div>
+			
+		 <div class="container-fluid" style="padding-left:40px">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card" style="max-width: 900px;">
+						<div class="card-body">
+							<form style="padding-top:10px" name ="myform" action ="" method ="GET">
+								<div class="form-group row">
+									<label for="nama" class="col-sm-3 col-form-label text-black font-weight-bold">Harga Barang</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control col-form-label" id="HargaBarang" nama="HargaBarang" placeholder="" required>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="nama" class="col-sm-3 col-form-label text-black font-weight-bold">Ongkos Kirim</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control col-form-label" id="ongkir" nama="ongkir" placeholder="" required>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="nama" class="col-sm-3 col-form-label text-black font-weight-bold">Rate</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control col-form-label" id="rate" nama="rate" placeholder="" required>
+									</div>
+								</div>
+								
+								<div class="form-group row">
+									<label for="nama" class="col-sm-3 col-form-label text-black font-weight-bold">Jenis Barang - Bea Masuk</label>
+									<div class="col-sm-3">
+										<select id="JenisBarang" name="JenisBarang" class="form-control form-control-sm col-form-label">
+											<option value="General">General - 7.5%</option>
+											<option value="Buku">Buku - 0%</option>
+											<option value="Tas">Tas - 20%</option>
+											<option value="Sepatu">Sepatu - 20%</option>
+											<option value="Tesktil">Tekstil - 30%</option>
+										</select>
+									</div>
+								</div>
+							
+								<div class="col-sm-12 text-black font-weight-bold">
+									<input type="button" type="submit" value="Hitung Perkiraan Total Biaya" class="btn btn-dark" name="submitbutton" onclick="CekPerhitungan(this.form)">
+								</div>
+							</form>
+					  </div>
+					</div>
+					
+					<div class="card" style="max-width: 900px; margin-top:30px">
+						<div class="card-body">
+							<form style="padding-top:10px"  name ="myform" action ="" method ="GET">
+								<div class="form-group row">
+									<label for="nama" class="col-sm-3 col-form-label text-black font-weight-bold">Total Harga Barang (IDR)</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control col-form-label" id="TotalBarangIDR" nama="TotalBarangIDR" placeholder="" disabled>
+									</div>
+								</div>
+								
+								<div class="form-group row">
+									<label for="nama" class="col-sm-3 col-form-label text-black font-weight-bold">Tarif Bea Masuk</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control col-form-label" id="TarifBeaMasuk" nama="TarifBeaMasuk" placeholder="" disabled>
+									</div>
+								</div>
+								
+								<div class="form-group row">
+									<label for="nama" class="col-sm-3 col-form-label text-black font-weight-bold">Dasar Pengenaan Pajak</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control col-form-label" id="DasarPengenaanPajak" nama="DasarPengenaanPajak" placeholder="" disabled>
+									</div>
+								</div>
+								
+								<div class="form-group row">
+									<label for="nama" class="col-sm-3 col-form-label text-black font-weight-bold">PPN (10%)</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control col-form-label" id="JumlahPPN" nama="JumlahPPN" placeholder="" disabled>
+									</div>
+								</div>
+								
+								<div class="form-group row">
+									<label for="nama" class="col-sm-3 col-form-label text-black font-weight-bold">PPH (7.5%)</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control col-form-label" id="JumlahPPH" nama="JumlahPPH" placeholder="" disabled>
+									</div>
+								</div>
+								
+								<div class="form-group row">
+									<label for="nama" class="col-sm-3 col-form-label text-black font-weight-bold">Total Pajak</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control col-form-label" id="NominalTotalPajak" nama="NominalTotalPajak" placeholder="" disabled>
+									</div>
+								</div>
+								
+								<div class="form-group row">
+									<label for="nama" class="col-sm-3 col-form-label text-black font-weight-bold">Total Keseluruhan</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control col-form-label" id="NominalTotalKeseluruhan" nama="NominalTotalKeseluruhan" placeholder="" disabled>
+									</div>
+								</div>
+								
+								<label class="text-black"> 
+								<br> Catatan : 
+								<br> - Perhitungan ini hanya perkiraan berdasarkan rumus perhitungan yang sudah diberikan. Sumber rumus : https://klikpajak.id/blog/perhitungan/menghitung-bea-masuk-dan-pajak-impor-belanja-online/
+								<br> - Ketentuan persentase Bea Masuk : Tas 15-20%, Sepatu 25-30%, Tesktil 15-20% (simulasi ini menggunakan batas atas)
+								<br> - Ketentuan PPH : 7.5% - 10% (simulasi ini menggunakan batas bawah)
+								</label>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</section>
+ <!--================End Home Banner Area =================-->
+
+	
+	
+ <!--================ start footer Area  =================-->
+	<footer class="footer-area section_gap" style="background-color:#E9A9E8">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4  col-md-6 col-sm-6">
+					<div class="single-footer-widget">
+                        
+                          
+                    </div>
+                       
+                    </div>
+                   </div>
+               </footer>
+<!--================ End footer Area  =================-->
+
+           
+</body>
+</html>
